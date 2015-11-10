@@ -43,9 +43,30 @@ norma (x, y, z) = sqrt ((fromInteger x) ^2 + (fromInteger y) ^2 + (fromInteger z
 
 -- Ejercicio 3/5
 pixelsDiferentesEnFrame :: Frame -> Frame -> Float -> FrameComprimido
-pixelsDiferentesEnFrame = error "Implementar!!! (ejercicio 3)"
+pixelsDiferentesEnFrame a b u = pixelsDiferentesEnFrame' a b u 0 0
 -- *Main> pixelsDiferentesEnFrame v1f1 v2f2 1
 -- [(0,0,(3,3,3)),(0,1,(3,3,3)),(1,0,(3,3,3)),(1,2,(-3,-3,-3)),(2,1,(-3,-3,-3)),(2,2,(-3,-3,-3))]
+
+
+-- Función auxiliar con contador de fila y columna.
+pixelsDiferentesEnFrame' :: Frame -> Frame -> Float -> Integer -> Integer -> FrameComprimido
+pixelsDiferentesEnFrame' [] [] _ _ _ = []
+pixelsDiferentesEnFrame' ((xp:[]):xs) ((yp:[]):ys) u row col | sonDiferentesPixels xp yp u = (row, col, diferenciaPixels xp yp) : rec
+                                                             | otherwise = rec
+    where rec = pixelsDiferentesEnFrame' xs ys u (row + 1) 0
+pixelsDiferentesEnFrame' ((xp:x):xs) ((yp:y):ys) u row col | sonDiferentesPixels xp yp u = (row, col, diferenciaPixels xp yp) : rec
+                                                           | otherwise = rec
+    where rec = pixelsDiferentesEnFrame' (x:xs) (y:ys) u row (col + 1)
+
+-- Resta los valores RGB de los pixeles.
+diferenciaPixels :: Pixel -> Pixel -> PixelDelta
+diferenciaPixels (x0, y0, z0) (x1, y1, z1) = (x0 - x1, y0 - y1, z0 - z1)
+
+
+-- Devuelve true si los pixeles se consideran diferentes dado
+-- el umbral, false de otra manera.
+sonDiferentesPixels :: Pixel -> Pixel -> Float -> Bool
+sonDiferentesPixels a b u = norma (diferenciaPixels a b) > u
 
 
 -- Ejercicio 4/5
