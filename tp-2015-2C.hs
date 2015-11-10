@@ -71,7 +71,12 @@ sonDiferentesPixels a b u = norma (diferenciaPixels a b) > u
 
 -- Ejercicio 4/5
 comprimir :: Video -> Float -> Integer -> VideoComprimido
-comprimir = error "Implementar!!! (ejercicio 4)"
+comprimir (Iniciar f) _ _ = IniciarComp f
+comprimir (Agregar f v) u n | fromIntegral (length diff) > n = AgregarNormal f compr
+                            | otherwise = AgregarComprimido diff compr
+    where
+        diff = pixelsDiferentesEnFrame f (ultimoFrame v) u
+        compr = comprimir v u n
 
 
 -- Ejercicio 5/5
