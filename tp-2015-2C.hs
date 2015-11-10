@@ -36,7 +36,7 @@ ultimoFrame (Agregar f _) = f
 
 -- Ejercicio 2/5
 norma :: (Integer, Integer, Integer) -> Float
-norma = error "Implementar!!! (ejercicio 2)"
+norma (x, y, z) = sqrt ((fromInteger x) ^2 + (fromInteger y) ^2 + (fromInteger z) ^2)
 -- *Main> norma (10, 20, 30)
 -- 37.416573
 
