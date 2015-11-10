@@ -28,7 +28,8 @@ mostrarFrameComprimido (x:xs) = "\t" ++ (show x) ++ "\n" ++ (mostrarFrameComprim
 
 -- Ejercicio 1/5
 ultimoFrame :: Video -> Frame
-ultimoFrame = error "Implementar!!! (ejercicio 1)"
+ultimoFrame (Iniciar f) = f
+ultimoFrame (Agregar f _) = f
 -- *Main> ultimoFrame video0 == f1
 -- True
 
