@@ -81,7 +81,10 @@ comprimir (Agregar f v) u n | fromIntegral (length diff) > n = AgregarNormal f c
 
 -- Ejercicio 5/5
 descomprimir :: VideoComprimido -> Video
-descomprimir = error "Implementar!!! (ejercicio 5)"
+descomprimir (IniciarComp f) = Iniciar f
+descomprimir (AgregarNormal f v) = Agregar f (descomprimir v)
+descomprimir (AgregarComprimido f v) = Agregar (aplicarCambio (ultimoFrame descomp) f) descomp
+    where descomp = descomprimir v
 
 
 -- Funciones provistas por la cátedra
